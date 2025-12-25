@@ -920,13 +920,7 @@ const QUIZ_DATA = {
       ],
       "answer": "A"
     },
-    {
-      "id": 81,
-      "type": "单选题",
-      "question": "(单选题)（原题为空，此处保留题号）### 三. 多选题（共20题，20分）",
-      "options": [],
-      "answer": ""
-    },
+    
     {
       "id": 82,
       "type": "多选题",
@@ -6979,3 +6973,4 @@ const QUIZ_DATA = {
     }
   ]
 };
+
