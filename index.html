@@ -109,6 +109,26 @@
         input:checked + .slider:before { transform: translateX(20px); }
 
         .result-msg { margin-top: 15px; font-weight: bold; height: 20px; }
+        /* --- 新增样式开始 --- */
+.jump-box {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+.jump-input {
+    width: 50px;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    text-align: center;
+    outline: none;
+    transition: 0.2s;
+}
+.jump-input:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
+}
+/* --- 新增样式结束 --- */
     </style>
 </head>
 <body>
@@ -135,7 +155,10 @@
 
         <div class="control-bar">
             <button class="btn btn-outline" onclick="prevQuestion()">上一题</button>
-            
+            <div class="jump-box">
+        <input type="number" id="jump-input" class="jump-input" placeholder="#" onkeypress="checkEnter(event)">
+        <button class="btn btn-outline" onclick="jumpToQuestion()">跳转</button>
+    </div>
             <div class="toggle-mode">
                 <label class="switch">
                     <input type="checkbox" id="wrong-mode-toggle" onchange="toggleWrongMode()">
@@ -337,6 +360,32 @@
     function toggleWrongMode() {
         isWrongMode = document.getElementById('wrong-mode-toggle').checked;
         loadUnit(currentUnitKey);
+    }
+    // --- 新增功能：跳转到指定题目 ---
+
+    function jumpToQuestion() {
+        const input = document.getElementById('jump-input');
+        const val = parseInt(input.value);
+        
+        // 验证输入是否合法
+        if (isNaN(val) || val < 1 || val > questions.length) {
+            alert(`请输入有效的题号 (1 - ${questions.length})`);
+            return;
+        }
+
+        // 更新索引（输入的是1开始的序号，程序用的是0开始的索引）
+        currentIndex = val - 1;
+        renderQuestion();
+        
+        // 清空输入框，体验更好
+        input.value = '';
+    }
+
+    // 监听回车键，方便用户输入后直接回车跳转
+    function checkEnter(event) {
+        if (event.key === "Enter") {
+            jumpToQuestion();
+        }
     }
 
 </script>
